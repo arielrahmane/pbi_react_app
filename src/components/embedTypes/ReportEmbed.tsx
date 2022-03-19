@@ -3,7 +3,7 @@ import { models, Report, Embed, service, Page } from 'powerbi-client';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import 'powerbi-report-authoring';
 
-export function ReportEmbed (): JSX.Element {
+export function ReportEmbed(): JSX.Element {
 
 	const [report, setReport] = useState<Report>();
 
