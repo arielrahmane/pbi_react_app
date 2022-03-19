@@ -37,7 +37,7 @@ export function Header(): JSX.Element {
   };
 
   return (
-    <header>
+    <header className="header">
       <AppBar>{displayDesktop()}</AppBar>
     </header>
   );
