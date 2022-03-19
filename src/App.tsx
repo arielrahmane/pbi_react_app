@@ -1,18 +1,25 @@
 import React from 'react';
+import { Routes ,Route } from 'react-router-dom';
 import { Header } from './components/common/Header';
-import { ReportEmbed } from './components/embedTypes/ReportEmbed';
 import { Footer } from './components/common/Footer';
+import routes from './api/routes';
 import 'powerbi-report-authoring';
 import './App.css';
 
 function App (): JSX.Element {
 	
 	return (
-		<div>
+    <div>
       <Header/>
-      <ReportEmbed/>
+      <Routes>
+        {routes.map(({ href, page }) => {
+          return (
+            <Route path={href} element={page}/>
+          );
+        })}
+      </Routes>
       <Footer/>
-		</div>
+    </div>
 	);
 }
 
