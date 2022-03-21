@@ -1,7 +1,7 @@
-import { ReportEmbed } from "../components/embedTypes/ReportEmbed"
+import { PowerBIReport } from "../components/embeds/PowerBIReport"
 
 export default function Report(): JSX.Element {
   return(
-    <ReportEmbed/>
+    <PowerBIReport/>
   )
 }

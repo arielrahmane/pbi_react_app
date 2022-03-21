@@ -4,7 +4,7 @@ import { PowerBIEmbed } from 'powerbi-client-react';
 import 'powerbi-report-authoring';
 import { getEmbedConfig } from '../../utils/embedActions';
 
-export function ReportEmbed(): JSX.Element {
+export function PowerBIReport(): JSX.Element {
 
 	const sampleReportUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Reports/SampleReport';
 
