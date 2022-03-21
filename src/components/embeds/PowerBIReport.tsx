@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { models, service } from 'powerbi-client';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import 'powerbi-report-authoring';
-import { getEmbedConfig } from '../../utils/embedActions';
+import { getVisualConfig } from '../../utils/visualActions';
 
 export function PowerBIReport(): JSX.Element {
 
@@ -35,7 +35,7 @@ export function PowerBIReport(): JSX.Element {
 	]);
 
   const getConfig = async () => {
-    const config = await getEmbedConfig(sampleReportUrl);
+    const config = await getVisualConfig(sampleReportUrl);
 
     if (!config) {
       alert("No config");

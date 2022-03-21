@@ -1,7 +1,12 @@
-import { PowerBIDashboard } from "../components/embeds/PowerBIDashboard"
+import { PowerBIVisual, VisualProps } from "../components/common/PowerBIVisual"
 
 export default function Dashboard(): JSX.Element {
+  const props = {
+    visualType: 'dashboard',
+    url: 'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard',
+  } as VisualProps;
+
   return(
-    <PowerBIDashboard/>
+    <PowerBIVisual {...props}/>
   )
 }
