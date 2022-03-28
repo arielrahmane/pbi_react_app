@@ -1,4 +1,5 @@
 export interface EmbedConfig {
+  id: string;
   response: Response;
   embedUrl: string;
   accessToken: string;
@@ -17,6 +18,7 @@ export const getVisualConfig = async (url: string): Promise<EmbedConfig | undefi
 
   return {
     response: {...configResponse},
+    id: reportConfig.Id,
     embedUrl: reportConfig.EmbedUrl,
     accessToken: reportConfig.EmbedToken.Token
   }

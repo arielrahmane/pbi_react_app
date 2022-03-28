@@ -15,6 +15,7 @@ export function PowerBIVisual(props: VisualProps): JSX.Element {
 
   const [visualConfig, setVisualConfig] = useState<models.IReportEmbedConfiguration>({
 		type: visualType,
+    id: undefined,
 		embedUrl: undefined,
 		tokenType: models.TokenType.Embed,
 		accessToken: undefined,
@@ -30,10 +31,11 @@ export function PowerBIVisual(props: VisualProps): JSX.Element {
         return;
       }
   
-      const { response, embedUrl, accessToken } = config;
+      const { response, embedUrl, accessToken, id } = config;
   
       setVisualConfig({
         ...response,
+        id,
         embedUrl,
         accessToken,
       });

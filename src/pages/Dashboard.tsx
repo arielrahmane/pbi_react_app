@@ -7,6 +7,6 @@ export default function Dashboard(): JSX.Element {
   } as VisualProps;
 
   return(
-    <PowerBIVisual {...props}/>
+    <PowerBIVisual key={props.visualType + props.url} {...props}/>
   )
 }
