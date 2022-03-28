@@ -14,7 +14,7 @@ function App (): JSX.Element {
       <Routes>
         {routes.map(({ href, page }) => {
           return (
-            <Route path={href} element={page}/>
+            <Route path={href} element={page} key={page + href}/>
           );
         })}
       </Routes>
