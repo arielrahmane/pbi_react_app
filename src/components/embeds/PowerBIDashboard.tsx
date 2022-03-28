@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { models, service } from 'powerbi-client';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import 'powerbi-report-authoring';
-import { getVisualConfig } from '../../utils/visualActions';
+import { getVisualConfig } from '../../utils/PBIEmbedActions';
 
 export function PowerBIDashboard(): JSX.Element {
 

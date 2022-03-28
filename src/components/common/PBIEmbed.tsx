@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { models, service } from 'powerbi-client';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import 'powerbi-report-authoring';
-import { getVisualConfig } from '../../utils/visualActions';
+import { getVisualConfig } from '../../utils/PBIEmbedActions';
 
-export interface VisualProps {
+export interface PBIEmbedProps {
   visualType: string;
   url: string;
 }
 
-export function PowerBIVisual(props: VisualProps): JSX.Element {
+export function PBIEmbed(props: PBIEmbedProps): JSX.Element {
 
   const {visualType, url } = props;
 

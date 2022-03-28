@@ -1,11 +1,11 @@
-export interface EmbedConfig {
+export interface PBIEmbedConfig {
   id: string;
   response: Response;
   embedUrl: string;
   accessToken: string;
 }
 
-export const getVisualConfig = async (url: string): Promise<EmbedConfig | undefined> => {
+export const getVisualConfig = async (url: string): Promise<PBIEmbedConfig | undefined> => {
 
   const configResponse = await fetch(url);
   
