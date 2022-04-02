@@ -5,21 +5,28 @@ import { Footer } from './components/common/Footer';
 import routes from './api/routes';
 import 'powerbi-report-authoring';
 import './App.css';
+import { IPublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react";
 
-function App (): JSX.Element {
+type AppProps = {
+  msalInstance: IPublicClientApplication
+};
+
+
+function App({ msalInstance }: AppProps): JSX.Element {
 	
 	return (
-    <div>
+    <MsalProvider instance={msalInstance}>
       <Header/>
-      <Routes>
-        {routes.map(({ href, page }) => {
-          return (
-            <Route path={href} element={page} key={page + href}/>
-          );
-        })}
-      </Routes>
+        <Routes>
+          {routes.map(({ href, page }) => {
+            return (
+              <Route path={href} element={page} key={page + href}/>
+            );
+          })}
+        </Routes>
       <Footer/>
-    </div>
+    </MsalProvider>
 	);
 }
 

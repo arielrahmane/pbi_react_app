@@ -6,6 +6,7 @@ import {
 
 const {
   REACT_APP_AUTHORITY_URI,
+  REACT_APP_KNOWN_AUTHORITY,
   REACT_APP_AUTHENTICATION_MODE,
   REACT_APP_SCOPE,
   REACT_APP_CLIENT_ID,
@@ -15,24 +16,35 @@ const {
 
 export const getAccessToken = async function () {
 
-    if (!REACT_APP_AUTHORITY_URI || !REACT_APP_AUTHENTICATION_MODE || !REACT_APP_CLIENT_ID || !REACT_APP_CLIENT_SECRET || !REACT_APP_TENANT_ID) {
+    if  (!REACT_APP_AUTHORITY_URI 
+          || !REACT_APP_AUTHENTICATION_MODE 
+          || !REACT_APP_CLIENT_ID 
+          || !REACT_APP_CLIENT_SECRET 
+          || !REACT_APP_TENANT_ID
+          || !REACT_APP_KNOWN_AUTHORITY
+        ) 
+    {
       console.log("Missing config params");
       return
     }
 
-    let authorityUrl = REACT_APP_AUTHORITY_URI;
-    authorityUrl = authorityUrl.replace("common", REACT_APP_TENANT_ID);
 
     const msalConfig: Configuration = {
       auth: {
           clientId: REACT_APP_CLIENT_ID,
-          authority: authorityUrl,
-          clientSecret: REACT_APP_CLIENT_SECRET,
-          knownAuthorities: [],
+          authority: `${REACT_APP_AUTHORITY_URI}/${REACT_APP_TENANT_ID}`,
+          // clientSecret: REACT_APP_CLIENT_SECRET,
+          knownAuthorities: [REACT_APP_KNOWN_AUTHORITY],
+          redirectUri: "http://localhost:3000",
       },
-  } as Configuration;
+      cache: {
+        cacheLocation: "sessionStorage",
+        storeAuthStateInCookie: false,
+      }
+  };
   
   const msalInstance = new PublicClientApplication(msalConfig);
+  const account = msalInstance.getAllAccounts()[0];
 
     if (REACT_APP_AUTHENTICATION_MODE.toLowerCase() === "masteruser") {
       console.log("masteruser");
@@ -43,8 +55,8 @@ export const getAccessToken = async function () {
           return
         }
 
-        await msalInstance.acquireTokenRedirect({scopes: [REACT_APP_SCOPE]})
-          .then((authResult) => console.log(authResult))
-          .catch((error) => console.log(error));
+        await msalInstance.acquireTokenSilent({scopes: [REACT_APP_SCOPE], account})
+          .then((authResult) => console.log("Auth result:", authResult))
+          .catch((error) => console.log("Error acquiring token:", error));
     }
 }
