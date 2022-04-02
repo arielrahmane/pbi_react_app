@@ -1,68 +1,50 @@
 import {
-  AuthenticationContext,
-  TokenResponse,
-  ErrorResponse
-} from "adal-node"
+  PublicClientApplication,
+  Configuration,
+  // AuthenticationResult,
+} from '@azure/msal-browser';
 
-export const getAccessToken = async function (): Promise<TokenResponse | ErrorResponse | string | undefined> {
+const {
+  REACT_APP_AUTHORITY_URI,
+  REACT_APP_AUTHENTICATION_MODE,
+  REACT_APP_SCOPE,
+  REACT_APP_CLIENT_ID,
+  REACT_APP_TENANT_ID,
+  REACT_APP_CLIENT_SECRET
+} = process.env
 
-    const {
-      AUTHORITY_URI,
-      AUTHENTICATION_MODE,
-      SCOPE,
-      PBI_USERNAME,
-      PBI_PASSWORD,
-      CLIENT_ID,
-      TENANT_ID,
-      CLIENT_SECRET
-    } = process.env
+export const getAccessToken = async function () {
 
-    if (!AUTHORITY_URI || !AUTHENTICATION_MODE)
-      return new Promise((resolve, reject) => resolve("Missing autority URI or auth mode"));
+    if (!REACT_APP_AUTHORITY_URI || !REACT_APP_AUTHENTICATION_MODE || !REACT_APP_CLIENT_ID || !REACT_APP_CLIENT_SECRET || !REACT_APP_TENANT_ID) {
+      console.log("Missing config params");
+      return
+    }
 
-    let authorityUrl = AUTHORITY_URI;
+    let authorityUrl = REACT_APP_AUTHORITY_URI;
+    authorityUrl = authorityUrl.replace("common", REACT_APP_TENANT_ID);
 
-    if (AUTHENTICATION_MODE.toLowerCase() === "masteruser") {
-      if (
-        !PBI_USERNAME
-        || !PBI_PASSWORD
-        || !CLIENT_ID
-        || !SCOPE
-      ) return new Promise((resolve, reject) => resolve("Missing masteruser config values"));
+    const msalConfig: Configuration = {
+      auth: {
+          clientId: REACT_APP_CLIENT_ID,
+          authority: authorityUrl,
+          clientSecret: REACT_APP_CLIENT_SECRET,
+          knownAuthorities: [],
+      },
+  } as Configuration;
+  
+  const msalInstance = new PublicClientApplication(msalConfig);
 
-      let context = new AuthenticationContext(authorityUrl);
+    if (REACT_APP_AUTHENTICATION_MODE.toLowerCase() === "masteruser") {
+      console.log("masteruser");
 
-      return new Promise(
-          (resolve, reject) => {
-              context.acquireTokenWithUsernamePassword(SCOPE, PBI_USERNAME, PBI_PASSWORD, CLIENT_ID, function (err, tokenResponse) {
-                  if (err) {
-                      reject(tokenResponse == null ? err : tokenResponse);
-                  }
-                  resolve(tokenResponse);
-              })
-          }
-      );
+    } else if (REACT_APP_AUTHENTICATION_MODE.toLowerCase() === "serviceprincipal") {
+        if (!REACT_APP_SCOPE) {
+          console.log("Missing scope");
+          return
+        }
 
-    } else if (AUTHENTICATION_MODE.toLowerCase() === "serviceprincipal") {
-        if (
-          !SCOPE
-          || !CLIENT_ID
-          || !TENANT_ID
-          || !CLIENT_SECRET
-        ) return new Promise((resolve, reject) => resolve("Missing serviceprincipal config values"));
-
-        authorityUrl = authorityUrl.replace("common", TENANT_ID);
-        let context = new AuthenticationContext(authorityUrl);
-
-        return new Promise(
-            (resolve, reject) => {
-                context.acquireTokenWithClientCredentials(SCOPE, CLIENT_ID, CLIENT_SECRET, function (err, tokenResponse) {
-                    if (err) {
-                        reject(tokenResponse == null ? err : tokenResponse);
-                    }
-                    resolve(tokenResponse);
-                })
-            }
-        );
+        await msalInstance.acquireTokenRedirect({scopes: [REACT_APP_SCOPE]})
+          .then((authResult) => console.log(authResult))
+          .catch((error) => console.log(error));
     }
 }

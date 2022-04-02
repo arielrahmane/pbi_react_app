@@ -1,16 +1,16 @@
-import { getAccessToken } from "../utils/authentication"
+import { getAccessToken } from "../utils/authentication";
+import { Button } from '@material-ui/core';
 
 export default function Home(): JSX.Element {
 
   async function getToken() {
-    const token = await getAccessToken();
-    console.log(token);
+    await getAccessToken();
   }
 
   return(
     <>
       <h1>Home</h1>
-      <button onClick={getToken}>Get Access Token</button>
+      <Button onClick={getToken}>Get Access Token</Button>
     </>
   )
 }
