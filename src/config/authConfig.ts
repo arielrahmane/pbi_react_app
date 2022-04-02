@@ -21,9 +21,13 @@ export const msalConfig: Configuration = {
 };
 
 export const loginRequest = {
- scopes: [REACT_APP_SCOPE ?? ""]
+  scopes: ["User.Read"]
 };
 
 export const graphConfig = {
-    graphMeEndpoint: REACT_APP_SCOPE_GRAPH
+  graphMeEndpoint: REACT_APP_SCOPE_GRAPH ?? ""
 };
+
+export const tokenRequest = {
+  scopes: [REACT_APP_SCOPE ?? ""]
+}
