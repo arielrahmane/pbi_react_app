@@ -5,7 +5,7 @@ import routes from "../../api/routes";
 import { handleLogin } from "../../utils/authentication";
 import { useMsal } from "@azure/msal-react";
 
-export function Header(): JSX.Element {
+export function Navbar(): JSX.Element {
   const { instance } = useMsal();
 
   const displayDesktop = () => {
