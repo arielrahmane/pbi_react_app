@@ -2,17 +2,17 @@ import { Configuration } from '@azure/msal-browser';
 
 const {
   REACT_APP_AUTHORITY_URI,
-  REACT_APP_SCOPE,
   REACT_APP_CLIENT_ID,
   REACT_APP_TENANT_ID,
   REACT_APP_SCOPE_GRAPH,
+  REACT_APP_REDIRECT_URI,
 } = process.env;
 
 export const msalConfig: Configuration = {
   auth: {
     clientId: REACT_APP_CLIENT_ID ?? "",
     authority: `${REACT_APP_AUTHORITY_URI}/${REACT_APP_TENANT_ID}`,
-    redirectUri: "http://localhost:3000",
+    redirectUri: REACT_APP_REDIRECT_URI,
     },
     cache: {
       cacheLocation: "sessionStorage",
@@ -29,5 +29,5 @@ export const graphConfig = {
 };
 
 export const tokenRequest = {
-  scopes: [REACT_APP_SCOPE ?? ""]
+  scopes: ["User.Read"]
 }

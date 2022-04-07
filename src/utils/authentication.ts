@@ -1,62 +1,26 @@
 import {
-  PublicClientApplication,
-  Configuration,
-  // AuthenticationResult,
+  IPublicClientApplication,
 } from '@azure/msal-browser';
 
-const {
-  REACT_APP_AUTHORITY_URI,
-  REACT_APP_KNOWN_AUTHORITY,
-  REACT_APP_AUTHENTICATION_MODE,
-  REACT_APP_SCOPE,
-  REACT_APP_CLIENT_ID,
-  REACT_APP_TENANT_ID,
-  REACT_APP_CLIENT_SECRET
-} = process.env
-
-export const getAccessToken = async function () {
-
-    if  (!REACT_APP_AUTHORITY_URI 
-          || !REACT_APP_AUTHENTICATION_MODE 
-          || !REACT_APP_CLIENT_ID 
-          || !REACT_APP_CLIENT_SECRET 
-          || !REACT_APP_TENANT_ID
-          || !REACT_APP_KNOWN_AUTHORITY
-        ) 
-    {
-      console.log("Missing config params");
-      return
-    }
+import { loginRequest, tokenRequest } from "../config/authConfig";
 
 
-    const msalConfig: Configuration = {
-      auth: {
-          clientId: REACT_APP_CLIENT_ID,
-          authority: `${REACT_APP_AUTHORITY_URI}/${REACT_APP_TENANT_ID}`,
-          // clientSecret: REACT_APP_CLIENT_SECRET,
-          knownAuthorities: [REACT_APP_KNOWN_AUTHORITY],
-          redirectUri: "http://localhost:3000",
-      },
-      cache: {
-        cacheLocation: "sessionStorage",
-        storeAuthStateInCookie: false,
-      }
-  };
-  
-  const msalInstance = new PublicClientApplication(msalConfig);
-  const account = msalInstance.getAllAccounts()[0];
+export const handleLogin = (instance: IPublicClientApplication) => {
+  instance.loginPopup(loginRequest)
+  .then((response) => {
+    console.log(response);
+  })
+  .catch(e => {
+    console.error(e);
+  });
+}
 
-    if (REACT_APP_AUTHENTICATION_MODE.toLowerCase() === "masteruser") {
-      console.log("masteruser");
-
-    } else if (REACT_APP_AUTHENTICATION_MODE.toLowerCase() === "serviceprincipal") {
-        if (!REACT_APP_SCOPE) {
-          console.log("Missing scope");
-          return
-        }
-
-        await msalInstance.acquireTokenSilent({scopes: [REACT_APP_SCOPE], account})
-          .then((authResult) => console.log("Auth result:", authResult))
-          .catch((error) => console.log("Error acquiring token:", error));
-    }
+export const acquireToken = (instance: IPublicClientApplication) => {
+  instance.acquireTokenSilent({scopes: tokenRequest.scopes, account: instance.getAllAccounts()[0]})
+  .then((token) => {
+    console.log(token);
+  })
+  .catch(e => {
+    console.error(e);
+  });
 }
