@@ -2,8 +2,12 @@ import React from "react";
 import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import routes from "../../api/routes";
+import { handleLogin } from "../../utils/authentication";
+import { useMsal } from "@azure/msal-react";
 
 export function Header(): JSX.Element {
+  const { instance } = useMsal();
+
   const displayDesktop = () => {
     return (
       <Toolbar>
@@ -20,7 +24,7 @@ export function Header(): JSX.Element {
   );
 
   const getMenuButtons = () => {
-    return routes.map(({ label, href }) => {
+    const navButtons = routes.map(({ label, href }) => {
       return (
         <Button
           {...{
@@ -34,6 +38,12 @@ export function Header(): JSX.Element {
         </Button>
       );
     });
+    return (
+      <>
+        {navButtons}
+        <Button color="inherit" onClick={() => handleLogin(instance)}>Login</Button>
+      </>
+    )
   };
 
   return (
