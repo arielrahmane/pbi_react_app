@@ -15,14 +15,6 @@ body {
 	margin: 0;
 }
 
-.header {
-	background: #3476AE 0 0 no-repeat padding-box;
-	border: 1px solid #707070;
-	height: 55px;
-	left: 0;
-	top: 0;
-}
-
 .hr {
 	border: 1px solid #E0E0E0;
 	opacity: 1;
