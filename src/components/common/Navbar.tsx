@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "flex-start",
   },
   menuButtons: {
-    marginLeft: theme.spacing(6),
+    marginLeft: theme.spacing(10),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(4),
   },
 }));
 
