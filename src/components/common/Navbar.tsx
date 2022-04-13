@@ -2,8 +2,8 @@ import React from "react";
 import { AppBar, Button, IconButton, makeStyles, Theme, Toolbar, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import routes from "../../api/routes";
-import { handleLogin } from "../../utils/authentication";
-import { useMsal } from "@azure/msal-react";
+import { handleAuth } from "../../utils/authentication";
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export function Navbar(): JSX.Element {
   const { instance } = useMsal();
   const classes = useStyles();
+  const isAuthenticated = useIsAuthenticated();
 
   const displayDesktop = () => {
     return (
@@ -37,7 +38,7 @@ export function Navbar(): JSX.Element {
           { appLogo }
           { getMenuButtons() }
         </div>
-        <Button color="inherit" onClick={() => handleLogin(instance)}>Login</Button>
+        <Button color="inherit" onClick={() => handleAuth(instance, isAuthenticated)}>{ isAuthenticated ? "Logout" : "Login"}</Button>
       </Toolbar>
     );
   };
