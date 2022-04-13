@@ -1,4 +1,5 @@
 import {
+  AuthenticationResult,
   IPublicClientApplication,
 } from '@azure/msal-browser';
 
@@ -29,12 +30,19 @@ export const handleAuth = (instance: IPublicClientApplication, isAuthenticated: 
   isAuthenticated ? handleLogout(instance) : handleLogin(instance)
 }
 
-export const acquireToken = (instance: IPublicClientApplication) => {
-  instance.acquireTokenSilent({scopes: tokenRequest.scopes, account: instance.getAllAccounts()[0]})
-  .then((token) => {
-    console.log(token);
-  })
-  .catch(e => {
-    console.error(e);
-  });
+export const acquireToken = (instance: IPublicClientApplication): Promise<AuthenticationResult> => {
+  return instance.acquireTokenSilent({scopes: tokenRequest.scopes, account: instance.getAllAccounts()[0]});
+}
+
+export const getRequestHeaders = async (instance: IPublicClientApplication) => {
+  await acquireToken(instance)
+    .then((token: AuthenticationResult) => {
+      return {
+        'Content-Type': "application/json",
+        'Authorization': `Bearer ${token.accessToken}`
+      };
+    })
+    .catch(err => {
+      return err;
+    })
 }
