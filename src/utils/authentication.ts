@@ -15,6 +15,20 @@ export const handleLogin = (instance: IPublicClientApplication) => {
   });
 }
 
+export const handleLogout = (instance: IPublicClientApplication) => {
+  instance.logoutPopup()
+  .then((response) => {
+    console.log(response);
+  })
+  .catch(e => {
+    console.error(e);
+  });
+}
+
+export const handleAuth = (instance: IPublicClientApplication, isAuthenticated: boolean) => {
+  isAuthenticated ? handleLogout(instance) : handleLogin(instance)
+}
+
 export const acquireToken = (instance: IPublicClientApplication) => {
   instance.acquireTokenSilent({scopes: tokenRequest.scopes, account: instance.getAllAccounts()[0]})
   .then((token) => {
