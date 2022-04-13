@@ -31,18 +31,21 @@ export const handleAuth = (instance: IPublicClientApplication, isAuthenticated: 
 }
 
 export const acquireToken = (instance: IPublicClientApplication): Promise<AuthenticationResult> => {
-  return instance.acquireTokenSilent({scopes: tokenRequest.scopes, account: instance.getAllAccounts()[0]});
+  return instance.acquireTokenSilent({scopes: tokenRequest.scopes, account: instance.getAllAccounts()[0]})
 }
 
 export const getRequestHeaders = async (instance: IPublicClientApplication) => {
-  await acquireToken(instance)
+  const headers = await acquireToken(instance)
     .then((token: AuthenticationResult) => {
+      console.log("token: ", token)
       return {
         'Content-Type': "application/json",
         'Authorization': `Bearer ${token.accessToken}`
       };
     })
     .catch(err => {
+      console.log("error: ", err)
       return err;
     })
+  return headers;
 }
