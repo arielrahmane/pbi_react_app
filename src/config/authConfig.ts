@@ -29,5 +29,5 @@ export const graphConfig = {
 };
 
 export const tokenRequest = {
-  scopes: ["User.Read"]
+  scopes: ["User.Read", "Report.Read.All"]
 }

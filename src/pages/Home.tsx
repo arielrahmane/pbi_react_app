@@ -2,6 +2,13 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { useMsal } from "@azure/msal-react";
 import { acquireToken, getRequestHeaders } from '../utils/authentication';
+import { getEmbedInfo } from '../utils/PBIEmbedActions';
+import { IPublicClientApplication } from '@azure/msal-browser';
+
+const {
+  REACT_APP_WORKSPACE_ID,
+  REACT_APP_ACADEMIC_REPORT_ID
+} = process.env
 
 const ProtectedContent = () => {
   const { instance } = useMsal();
@@ -10,10 +17,18 @@ const ProtectedContent = () => {
     console.log("headers: ", headers);
   }
 
+  const callGetEmbedInfo = async (instance: IPublicClientApplication) => {
+    if (!REACT_APP_WORKSPACE_ID || !REACT_APP_ACADEMIC_REPORT_ID)
+      return;
+    const embedInfo = await getEmbedInfo(instance, REACT_APP_WORKSPACE_ID, REACT_APP_ACADEMIC_REPORT_ID );
+    console.log("EMBED INFO: ", embedInfo);
+  }
+  
   return (
     <>
       <Button onClick={() => acquireToken(instance).then(token => console.log(token))}>Acquire Token</Button>
       <Button onClick={() => retrieveHeaders()}>Get Headers</Button>
+      <Button onClick={() => callGetEmbedInfo(instance)}>Get Embed Info</Button>
     </>
   )
 }

@@ -35,17 +35,16 @@ export const acquireToken = (instance: IPublicClientApplication): Promise<Authen
 }
 
 export const getRequestHeaders = async (instance: IPublicClientApplication) => {
-  const headers = await acquireToken(instance)
+  return await acquireToken(instance)
     .then((token: AuthenticationResult) => {
       console.log("token: ", token)
       return {
         'Content-Type': "application/json",
-        'Authorization': `Bearer ${token.accessToken}`
+        'Authorization': `Bearer ${token.accessToken}`,
       };
     })
     .catch(err => {
       console.log("error: ", err)
       return err;
     })
-  return headers;
 }
