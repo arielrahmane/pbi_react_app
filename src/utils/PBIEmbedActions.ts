@@ -70,8 +70,6 @@ export const getEmbedParamsForSingleReport = async (instance: IPublicClientAppli
   const result = await fetch(reportInGroupApi, {
     method: 'GET',
     headers: headers,
-    credentials: "include",
-    cache: "default"
   });
 
   if (!result.ok) {
