@@ -21,7 +21,7 @@ export const msalConfig: Configuration = {
 };
 
 export const loginRequest = {
-  scopes: ["https://analysis.windows.net/powerbi/api/Report.Read.All"]
+  scopes: ["https://analysis.windows.net/powerbi/api/Report.Read.All", "https://analysis.windows.net/powerbi/api/Dataset.Read.All"]
 };
 
 export const graphConfig = {
@@ -29,5 +29,5 @@ export const graphConfig = {
 };
 
 export const tokenRequest = {
-  scopes: ["https://analysis.windows.net/powerbi/api/Report.Read.All"]
+  scopes: ["https://analysis.windows.net/powerbi/api/Report.Read.All", "https://analysis.windows.net/powerbi/api/Dataset.Read.All"]
 }

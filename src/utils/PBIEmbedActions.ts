@@ -51,7 +51,7 @@ export const getEmbedInfo = async (instance: IPublicClientApplication, workspace
 
     return {
         accessToken: embedParams.embedToken.token,
-        embedUrl:embedParams.reportDetail,
+        embedUrl: embedParams.reportDetail,
         expiry: embedParams.embedToken.expiration,
         status: 200
     };
@@ -98,33 +98,24 @@ export const getEmbedParamsForSingleReport = async (instance: IPublicClientAppli
 
 export const getEmbedTokenForSingleReportSingleWorkspace = async (instance: IPublicClientApplication, reportId: String, datasetIds: Array<String>, targetWorkspaceId: String) => {
   
-  let formData = {
-    reports: [{
-      id: reportId
-    }],
-    datasets: [] as Array<any>,
-    targetWorkspaces: [] as Array<any>,
-  };
+  const embedTokenApi = `https://api.powerbi.com/v1.0/myorg/groups/${targetWorkspaceId}/reports/${reportId}/GenerateToken`;
 
-  datasetIds.forEach(datasetId => {
-    formData.datasets.push({id: datasetId})
-  })
+  const body = {
+    accessLevel: "View",
+  }
 
-  if (targetWorkspaceId) 
-    formData.targetWorkspaces.push({id: targetWorkspaceId});
-
-  const embedTokenApi = "https://api.powerbi.com/v1.0/myorg/GenerateToken";
   const headers = await getRequestHeaders(instance);
   const result = await fetch(embedTokenApi, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(formData)
+    body: JSON.stringify(body)
   });
-  
+
   if (!result.ok) {
     throw result;
   }
-    
+
+  const resultJson = await result.json();
   
-  return result.json();
+  return resultJson;
 }
