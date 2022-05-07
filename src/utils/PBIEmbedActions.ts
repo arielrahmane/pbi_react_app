@@ -9,21 +9,21 @@ export interface PBIEmbedConfig {
 }
 
 export interface PowerBiReportDetails {
-  reportId: String;
-  reportName: String;
-  embedUrl: String;
+  reportId: string;
+  reportName: string;
+  embedUrl: string;
 }
 
 export interface ReportEmbedConfig {
-  type: String;
+  type: string;
   reportDetail: PowerBiReportDetails;
   embedToken: EmbedToken;
 }
 
 export interface EmbedToken {
-  expiration: String;
-  token: String;
-  tokenId: String;
+  expiration: string;
+  token: string;
+  tokenId: string;
 }
 
 export const getVisualConfig = async (url: string): Promise<PBIEmbedConfig | undefined> => {
@@ -45,22 +45,8 @@ export const getVisualConfig = async (url: string): Promise<PBIEmbedConfig | und
   }
 };
 
-export const getEmbedInfo = async (instance: IPublicClientApplication, workspaceId: String, reportId: String) => {
-  try {
-    const embedParams = await getEmbedParamsForSingleReport(instance, workspaceId, reportId);
-
-    return {
-        accessToken: embedParams.embedToken.token,
-        embedUrl: embedParams.reportDetail,
-        expiry: embedParams.embedToken.expiration,
-        status: 200
-    };
-  } catch (err: any) {
-      return {
-          status: err.status,
-          error: err
-      }
-  }
+export const getReportEmbedInfo = async (instance: IPublicClientApplication, workspaceId: String, reportId: String) => {
+  return await getEmbedParamsForSingleReport(instance, workspaceId, reportId);
 }
 
 export const getEmbedParamsForSingleReport = async (instance: IPublicClientApplication, workspaceId: String, reportId: String) => {
@@ -90,7 +76,7 @@ export const getEmbedParamsForSingleReport = async (instance: IPublicClientAppli
   const reportEmbedConfig: ReportEmbedConfig = {
     type: 'report',
     reportDetail: reportDetails,
-    embedToken
+    embedToken,
   }
 
   return reportEmbedConfig;

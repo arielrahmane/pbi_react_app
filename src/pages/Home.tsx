@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { useMsal } from "@azure/msal-react";
 import { acquireToken, getRequestHeaders } from '../utils/authentication';
-import { getEmbedInfo } from '../utils/PBIEmbedActions';
+import { getReportEmbedInfo } from '../utils/PBIEmbedActions';
 import { IPublicClientApplication } from '@azure/msal-browser';
 
 const {
@@ -20,7 +20,7 @@ const ProtectedContent = () => {
   const callGetEmbedInfo = async (instance: IPublicClientApplication) => {
     if (!REACT_APP_WORKSPACE_ID || !REACT_APP_ACADEMIC_REPORT_ID)
       return;
-    const embedInfo = await getEmbedInfo(instance, REACT_APP_WORKSPACE_ID, REACT_APP_ACADEMIC_REPORT_ID );
+    const embedInfo = await getReportEmbedInfo(instance, REACT_APP_WORKSPACE_ID, REACT_APP_ACADEMIC_REPORT_ID );
     console.log("EMBED INFO: ", embedInfo);
   }
   
@@ -28,7 +28,7 @@ const ProtectedContent = () => {
     <>
       <Button onClick={() => acquireToken(instance).then(token => console.log(token))}>Acquire Token</Button>
       <Button onClick={() => retrieveHeaders()}>Get Headers</Button>
-      <Button onClick={() => callGetEmbedInfo(instance)}>Get Embed Info</Button>
+      <Button onClick={() => callGetEmbedInfo(instance)}>Get Report Embed Info</Button>
     </>
   )
 }
