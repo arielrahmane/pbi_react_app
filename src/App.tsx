@@ -14,11 +14,13 @@ function App(): JSX.Element {
 	return (
     <>
       <Navbar />
-      <Routes>
-        <Route element={ Home() } path="/home" />
-        <Route element={ Report() } path="/report" />
-        <Route element={ Dashboard() } path="/dashboard" />
-      </Routes>
+      <div className="main-content">
+        <Routes>
+          <Route element={ Home() } path="/home" />
+          <Route element={ Report() } path="/report" />
+          <Route element={ Dashboard() } path="/dashboard" />
+        </Routes>
+      </div>
       <Footer />
     </>
 	);

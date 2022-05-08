@@ -13,9 +13,9 @@ const instance = new PublicClientApplication(msalConfig);
 ReactDOM.render(
   <React.StrictMode>
     <MsalProvider instance={instance}>
-    ` <Router>
+      <Router>
         <App />
-      </Router>`
+      </Router>
     </MsalProvider>
   </React.StrictMode>,
   document.getElementById('root')

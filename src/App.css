@@ -75,3 +75,7 @@ button:onfocus {
 iframe {
 	border: none;
 }
+
+.main-content {
+  padding-top: 70px;
+}
