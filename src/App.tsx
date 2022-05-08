@@ -16,9 +16,9 @@ function App(): JSX.Element {
       <Navbar />
       <div className="main-content">
         <Routes>
-          <Route element={ Home() } path="/home" />
-          <Route element={ Report() } path="/report" />
-          <Route element={ Dashboard() } path="/dashboard" />
+          <Route element={ <Home /> } path="/" />
+          <Route element={ <Report /> } path="/report" />
+          <Route element={ <Dashboard /> } path="/dashboard" />
         </Routes>
       </div>
       <Footer />

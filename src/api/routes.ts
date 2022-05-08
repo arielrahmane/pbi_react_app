@@ -6,7 +6,7 @@ export interface Route {
 const routes: Route[] = [
   {
     label: "Home",
-    href: "/home",
+    href: "/",
   },
   {
     label: "Dashboard",

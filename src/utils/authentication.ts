@@ -37,7 +37,6 @@ export const acquireToken = (instance: IPublicClientApplication): Promise<Authen
 export const getRequestHeaders = async (instance: IPublicClientApplication) => {
   return await acquireToken(instance)
     .then((token: AuthenticationResult) => {
-      console.log("token: ", token)
       return {
         'Content-Type': "application/json",
         'Authorization': `Bearer ${token.accessToken}`,

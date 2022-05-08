@@ -18,7 +18,6 @@ export default function Report(): JSX.Element {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("Use effect rendered");
     const getConfig = async () => {
       if (!REACT_APP_WORKSPACE_ID || !REACT_APP_ACADEMIC_REPORT_ID)
         return;
@@ -28,8 +27,7 @@ export default function Report(): JSX.Element {
         _embedToken: embedInfo.embedToken.token,
         _id: embedInfo.reportDetail.reportId,
         _embedUrl: embedInfo.reportDetail.embedUrl,
-      }
-      console.log("config rendered: ", _config);
+      };
       setConfig(_config);
       setLoaded(true);
     };
