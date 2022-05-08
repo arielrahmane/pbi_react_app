@@ -6,12 +6,15 @@ import { getVisualConfig } from '../../utils/PBIEmbedActions';
 
 export interface PBIEmbedProps {
   visualType: string;
-  url: string;
+  url?: string;
+  _id?: string;
+  _embedToken?: string;
+  _embedUrl?: string;
 }
 
 export function PBIEmbed(props: PBIEmbedProps): JSX.Element {
 
-  const {visualType, url } = props;
+  const {visualType, url, _id, _embedToken, _embedUrl } = props;
 
   const [visualConfig, setVisualConfig] = useState<models.IReportEmbedConfiguration>({
 		type: visualType,
@@ -24,7 +27,15 @@ export function PBIEmbed(props: PBIEmbedProps): JSX.Element {
 
   useEffect(() => {
     const getConfig = async () => {
-      const config = await getVisualConfig(url);
+      let config;
+      url ? 
+        config = await getVisualConfig(url) : 
+        config = {
+          embedUrl: _embedUrl,
+          accessToken: _embedToken,
+          id: _id,
+          response: {}
+        };
   
       if (!config) {
         alert("No config");
@@ -41,7 +52,7 @@ export function PBIEmbed(props: PBIEmbedProps): JSX.Element {
       });
     }
     getConfig();
-  }, [url]);
+  }, [_embedToken, _embedUrl, _id, url]);
 
 	const eventHandlersMap = new Map([
 		['loaded', function () {
