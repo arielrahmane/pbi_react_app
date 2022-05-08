@@ -1,7 +1,7 @@
 import { useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 import { PBIEmbed, PBIEmbedProps } from "../components/common/PBIEmbed";
-import { getReportEmbedInfo } from "../utils/PBIEmbedActions";
+import { getEmbedParamsForSingleReport } from "../utils/PBIEmbedActions";
 
 const {
   REACT_APP_WORKSPACE_ID,
@@ -21,7 +21,7 @@ export default function Report(): JSX.Element {
     const getConfig = async () => {
       if (!REACT_APP_WORKSPACE_ID || !REACT_APP_ACADEMIC_REPORT_ID)
         return;
-      const embedInfo = await getReportEmbedInfo(instance, REACT_APP_WORKSPACE_ID, REACT_APP_ACADEMIC_REPORT_ID);
+      const embedInfo = await getEmbedParamsForSingleReport(instance, REACT_APP_WORKSPACE_ID, REACT_APP_ACADEMIC_REPORT_ID);
       const _config: PBIEmbedProps = {
         visualType: 'report',
         _embedToken: embedInfo.embedToken.token,

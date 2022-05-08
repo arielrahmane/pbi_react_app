@@ -45,10 +45,6 @@ export const getVisualConfig = async (url: string): Promise<PBIEmbedConfig | und
   }
 };
 
-export const getReportEmbedInfo = async (instance: IPublicClientApplication, workspaceId: String, reportId: String) => {
-  return await getEmbedParamsForSingleReport(instance, workspaceId, reportId);
-}
-
 export const getEmbedParamsForSingleReport = async (instance: IPublicClientApplication, workspaceId: String, reportId: String) => {
   const reportInGroupApi = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/reports/${reportId}`;
 
