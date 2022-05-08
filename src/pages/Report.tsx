@@ -18,6 +18,7 @@ export default function Report(): JSX.Element {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    console.log("Use effect rendered");
     const getConfig = async () => {
       if (!REACT_APP_WORKSPACE_ID || !REACT_APP_ACADEMIC_REPORT_ID)
         return;
